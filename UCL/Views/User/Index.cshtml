@@ -1,0 +1,38 @@
+﻿@model UCL.ViewModels.UserViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users</h2>
+<hr />
+<p>
+    @Html.ActionLink("Add new user", "Create", null, new { @class = "btn badge-info" })
+</p>
+@if (Model.Users != null)
+{
+    <table class="table table-dark" table-sm table-striped table-hover w-auto">
+        <tr>
+            <th>User's email</th>
+            <th>Updates</th>
+        </tr>
+
+        @foreach (var item in Model.Users)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "badge badge-info" })
+                @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "badge badge-primary" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "badge badge-danger" })
+            </td>
+        </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No user available. Please create one.</p>
+}
