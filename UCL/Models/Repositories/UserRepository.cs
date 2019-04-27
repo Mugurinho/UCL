@@ -16,27 +16,32 @@ namespace UCL.Models
 
         }
 
-        //query and return all existing users from database
+        //return all existing users from database when Index
         public override IQueryable<User> GetAll()
         {
             return base.GetAll();
         }
 
-        //return users by id
+        //return user by id when Edit action
         public User GetUserById(int id)
         {
             return GetAll(x => x.UserId == id).FirstOrDefault();
         }
 
-        //create new user
+        //create new user when Create action
         public void Create(User user)
         {
             Add(user);
             SubmitChanges();
         }
 
-        //update users
+        //update users when Edit action
         public void Update(User user)
+        {
+            SubmitChanges();
+        }
+
+        public void Delete(int id)
         {
             SubmitChanges();
         }

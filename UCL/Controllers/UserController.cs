@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using UCL.Models;
@@ -18,7 +20,7 @@ namespace UCL.Controllers
         }
         private UserRepository _ur;
 
-        //get user data
+        //get a table of user data
         public ActionResult Index()
         {
             var uvm = new UserViewModel(_ur, null);
@@ -26,7 +28,14 @@ namespace UCL.Controllers
             return View(uvm);
         }
 
-        //get an empty form for creating new user
+        public ActionResult Details(int id)
+        {
+            var user = _ur.GetUserById(id);
+            var uvm = new UserViewModel(_ur, user);
+            return View(uvm);
+        }
+
+        //get an empty form with fields for creating new user
         public ActionResult Create()
         {
             var uvm = new UserViewModel(_ur, null);
@@ -84,6 +93,18 @@ namespace UCL.Controllers
                 }
             }
             return RedirectToAction("Edit", new { id = uvm.User.UserId });
+        }
+
+       [HttpPost]
+       public ActionResult Delete(int id)
+        {
+            var uvm = new UserViewModel(_ur, null);
+             _ur.Delete(id);
+            if (uvm.User == null)
+            {
+                return HttpNotFound();
+            }
+            return View(uvm);
         }
     }
 }

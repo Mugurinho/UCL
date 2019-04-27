@@ -31,7 +31,7 @@ namespace UCL.Models
             return _entities.Set<TEntity>().Count();
         }
 
-        public virtual void Remove(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             _entities.Set<TEntity>().Remove(entity);
         }

@@ -11,13 +11,18 @@ namespace UCL.Models.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Programme
     {
         public int ProgrammeId { get; set; }
+        [Required]
         public string ProgrammeTitle { get; set; }
+        [Required]
         public string ProgrammeDescription { get; set; }
+        [Required]
         public string ProgrammeFee { get; set; }
+        [Required(ErrorMessage = "Selecting a faculty is required.")]
         public int FacultyId { get; set; }
     
         public virtual Faculty Faculty { get; set; }
