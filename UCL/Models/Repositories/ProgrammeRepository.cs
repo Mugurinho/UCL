@@ -34,17 +34,20 @@ namespace UCL.Models.Repositories
             return GetAll(x => x.ProgrammeTitle == title).FirstOrDefault();
         }
 
-        public Programme CreateProgramme(Programme programme, string facultyId)
+        public void Create(Programme programme)
         {
-            Programme pro = new Programme
-            {
-                ProgrammeTitle = programme.ProgrammeTitle,
-                ProgrammeDescription = programme.ProgrammeDescription,
-                ProgrammeFee = programme.ProgrammeFee,
-                FacultyId = int.Parse(facultyId)
-            };
-            base.Add(pro);
-            return pro;
+            Add(programme);
+            SubmitChanges();
+        }
+
+        public void Update(Programme programme)
+        {
+            SubmitChanges();
+        }
+
+        public IEnumerable<Faculty> GetFaculties()
+        {
+            return _entities.Faculties.ToList();
         }
     }
 }

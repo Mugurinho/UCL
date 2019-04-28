@@ -23,51 +23,49 @@ namespace UCL.Controllers
         // get programmes
         public ActionResult Index()
         {
-            var pvm = new ProgrammeViewModel();
-            pvm.Programmes = _pr.GetAll().OrderBy(x => x.ProgrammeId);
-            if (pvm.Programmes == null && pvm.Programmes.Count() < 0) throw new HttpException(404, "The resource you are looking could have been removed, had its name changed, or is temporarily unavailable.");
+            var pvm = new ProgrammeViewModel(_pr, null);
             return View(pvm);
         }
 
         //get the data from the model with dropdown
         public ActionResult Create()
         {
-            var pvm = new ProgrammeViewModel();
-            pvm.FacultyList = new List<SelectListItem>();
-            pvm.Faculties = _fr.GetAll();
-            if (pvm.Faculties == null && pvm.Faculties.Count() < 0)
-            {
-                throw new HttpException(404, "Faculties not found!");
-            }
-            foreach (var faculty in pvm.Faculties)
-            {
-                pvm.FacultyList.Add(new SelectListItem { Text = faculty.FacultyName, Value = faculty.FacultyId.ToString() });
-            }
+            var pvm = new ProgrammeViewModel(_pr, null);
             return View(pvm);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(Programme programme, string facultyId)
+        public ActionResult Create(Programme programme)
         {
-            var pvm = new ProgrammeViewModel();
+            var pvm = new ProgrammeViewModel(_pr, programme);
             if (ModelState.IsValid)
             {
-                try
-                {
-                    pvm.Programme = _pr.CreateProgramme(programme, facultyId);
-                    if (pvm.Programme == null)
-                    {
-                        throw new HttpException(404, "Programme not found!");
-                    }
-                    _pr.SubmitChanges();
-                    return RedirectToAction("Index", pvm);
-                }
-                catch (Exception)
-                {
-                    throw new HttpException(404, "Unexpected error!");
-                }
+                _pr.Create(pvm.Programme);
+                //return RedirectToAction("Edit", new { id = pvm.Programme.ProgrammeId });
+                return RedirectToAction("Index");
             }
             return View(pvm);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            ProgrammeViewModel pvm = new ProgrammeViewModel(_pr, _pr.GetByID(id));
+            return View(pvm);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection fc)
+        {
+            ProgrammeViewModel pvm = new ProgrammeViewModel(_pr, _pr.GetByID(id));
+            TryUpdateModel(pvm);
+            if(ModelState.IsValid)
+            {
+                _pr.Update(pvm.Programme);
+                return RedirectToAction("Index");
+            }
+            return View(pvm);
+
         }
     }
 }

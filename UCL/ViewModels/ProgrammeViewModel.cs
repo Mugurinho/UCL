@@ -11,9 +11,31 @@ namespace UCL.ViewModels
 {
     public class ProgrammeViewModel
     {
-        public IQueryable<Programme> Programmes { get; set; }
+        private ProgrammeRepository _pr;
+        public ProgrammeViewModel(ProgrammeRepository pr, Programme programme)
+        {
+            _pr = pr;
+            Programme = programme;
+            Programmes = _pr.GetAll().OrderBy(x => x.ProgrammeId);
+        }
+
+        public IEnumerable<Programme> Programmes { get; set; }
         public Programme Programme { get; set; }
-        public List<SelectListItem> FacultyList { get; set; }
         public IQueryable<Faculty> Faculties { get; set; }
+
+
+        private List<SelectListItem> facultyList = null;
+        public List<SelectListItem> FacultyList
+        {
+            get
+            {
+                if (facultyList == null)
+                {
+                    facultyList = new List<SelectListItem>();
+                    facultyList.AddRange(_pr.GetFaculties().Select(x => new SelectListItem { Text = x.FacultyName, Value = x.FacultyId.ToString() }));
+                }
+                return facultyList;
+            }
+        }
     }
 }
