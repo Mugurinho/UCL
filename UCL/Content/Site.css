@@ -42,3 +42,62 @@ a:hover {
     padding-right: 10px;
     padding-bottom: 5px;
 }
+
+
+/*.button, .btnEdit, .btnDel, .btnInfo {
+    text-decoration: none;
+    border: 1px solid black;
+    transition: all 0.4s ease 0s;
+    margin: 0px 10px 10px 0px;
+    padding: 5px 15px;
+    color: white;
+    background-color: black;
+}
+
+.button {
+    background-color: black;
+    color: white;
+    text-decoration: none;
+}
+
+.btnInfo {
+    background-color: steelblue;
+    color: white;
+    text-decoration: none;
+}
+
+.btnEdit {
+    background-color: seagreen;
+    color: white;
+    text-decoration: none;
+}
+
+.btnDel {
+    background-color: red;
+    color: white;
+    text-decoration: none;
+}*/
+
+/*.button:hover {
+        background-color: black;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btnedit:hover {
+        background-color: steelblue;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btninfo:hover {
+        background-color: steelblue;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btndel:hover {
+        background-color: red;
+        color: white;
+        text-decoration: none;
+    }*/

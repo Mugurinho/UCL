@@ -73,28 +73,16 @@ namespace UCL.Controllers
         {
             var uvm = new UserViewModel(_ur, null);
             uvm.User = _ur.GetUserById(id);
+            TryUpdateModel(uvm);
             if (ModelState.IsValid)
             {
-                try
-                {
-                    if (uvm.User == null)
-                    {
-                        throw new HttpException(404, "User not found!");
-                    }
-                    uvm.User.FirstName = user.FirstName;
-                    uvm.User.LastName = user.LastName;
-                    uvm.User.Email = user.Email;
-                    _ur.SubmitChanges();
-                    return RedirectToAction("Index", uvm);
-                }
-                catch (Exception)
-                {
-                    throw new HttpException(404, "Unexpected error!");
-                }
+                _ur.Update(uvm.User);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Edit", new { id = uvm.User.UserId });
+            return RedirectToAction("Index");
         }
-
+       
+        //not working fully atm
        [HttpPost]
        public ActionResult Delete(int id)
         {
