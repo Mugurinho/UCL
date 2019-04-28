@@ -43,7 +43,22 @@ a:hover {
     padding-bottom: 5px;
 }
 
+#footerText {
+    font-size: 13px;
+}
 
+.page-footer {
+    background-color: #45526e;
+    color: whitesmoke;
+}
+
+a {
+    color: whitesmoke;
+}
+
+a:hover{
+    color: lightblue;
+}
 /*.button, .btnEdit, .btnDel, .btnInfo {
     text-decoration: none;
     border: 1px solid black;
